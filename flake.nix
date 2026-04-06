@@ -39,6 +39,7 @@
             packages = [ 
               inputs.cargo2nix.packages.${system}.cargo2nix
               p.cargo-expand
+              p.rustfmt
             ];
           };
 
