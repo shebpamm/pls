@@ -12,5 +12,8 @@ fn main() {
         Commands::Home { machine } => commands::home::home(ctx, machine),
         Commands::New { template } => commands::new::new(ctx, template),
         _ => unimplemented!(),
-    };
+    }.unwrap_or_else(|e| {
+        eprintln!("Error: {e}");
+        std::process::exit(1);
+    });
 }
