@@ -46,6 +46,23 @@ pub struct TemplateArgs {
     pub name: Option<String>,
 }
 
+impl TemplateArgs {
+    pub fn resolved_name(&self) -> String {
+        self.name.clone().unwrap_or_else(|| {
+            self.path
+                .file_stem()
+                .and_then(|os_str| os_str.to_str())
+                .unwrap_or_else(|| {
+                    panic!(
+                        "Could not determine name from path: {}",
+                        self.path.display()
+                    )
+                })
+                .to_string()
+        })
+    }
+}
+
 #[derive(Debug, Subcommand)]
 pub enum Templates {
     Aspect {

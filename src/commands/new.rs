@@ -1,18 +1,20 @@
 use color_eyre::eyre::Result;
 
-use crate::cli::{Templates, TemplateArgs};
+use crate::cli::{Templates};
 use askama::Template;
 
 #[derive(Template)]
-#[template(path = "aspect.nix")]
-struct AspectTemplate<'a> {
-    args: &'a TemplateArgs,
+#[template(path = "aspect.nix", escape = "none")]
+struct AspectTemplate {
+    name: String,
 }
 
-pub fn new(ctx: crate::context::Context, template: Templates) -> Result<()> {
+pub fn new(_ctx: crate::context::Context, template: Templates) -> Result<()> {
     match template {
         Templates::Aspect { args } => {
-            let aspect = AspectTemplate { args: &args }; 
+            let name = args.resolved_name();
+
+            let aspect = AspectTemplate { name }; 
             println!("{}", aspect.render()?);
         }
 
