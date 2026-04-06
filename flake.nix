@@ -36,7 +36,10 @@
           };
 
           workspaceShell = rustPkgs.workspaceShell {
-            packages = [ inputs.cargo2nix.packages.${system}.cargo2nix ];
+            packages = [ 
+              inputs.cargo2nix.packages.${system}.cargo2nix
+              p.cargo-expand
+            ];
           };
 
         pls = rustPkgs.workspace.pls {};
