@@ -8,8 +8,15 @@
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
-    cargo2nix.url = "github:cargo2nix/cargo2nix/release-0.12";
+    cargo2nix = {
+      url = "github:cargo2nix/cargo2nix/release-0.12";
+      inputs.rust-overlay.follows = "rust-overlay";
+    };
     nixpkgs.follows = "cargo2nix/nixpkgs";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "cargo2nix/nixpkgs";
+    };
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -24,7 +31,7 @@
               overlays = [ inputs.cargo2nix.overlays.default ];
             };
           rustPkgs = p.rustBuilder.makePackageSet {
-            rustVersion = "1.85.0";
+            rustVersion = "1.88.0";
             packageFun = import ./Cargo.nix;
           };
 
