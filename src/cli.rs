@@ -75,6 +75,16 @@ pub enum Templates {
     },
 }
 
+impl Templates {
+    pub fn args(&self) -> &TemplateArgs {
+        match self {
+            Templates::Aspect { args } => args,
+            Templates::Lib { args } => args,
+        }
+    }
+}
+
+
 pub fn parse_args() -> Arguments {
     Arguments::parse()
 }
