@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use std::path::PathBuf;
 
 #[derive(Debug, Parser)]
 #[clap(name = "pls", version)]
@@ -23,14 +24,38 @@ pub enum Commands {
     Check {
         target: Option<String>,
     },
-    Gc { },
+    Gc {},
     Home {
         machine: Option<String>,
     },
-    Rebuild { },
-    Repl { },
-    Update { },
-    Diff { },
+    Rebuild {},
+    Repl {},
+    Update {},
+    Diff {},
+    New {
+        #[clap(subcommand)]
+        template: Templates,
+    },
+}
+
+#[derive(Debug, Parser)]
+pub struct TemplateArgs {
+    #[clap(help = "Path to module")]
+    pub path: PathBuf,
+    #[clap(short, long, help = "Name of the module")]
+    pub name: Option<String>,
+}
+
+#[derive(Debug, Subcommand)]
+pub enum Templates {
+    Aspect {
+        #[clap(flatten)]
+        args: TemplateArgs,
+    },
+    Lib {
+        #[clap(flatten)]
+        args: TemplateArgs,
+    },
 }
 
 pub fn parse_args() -> Arguments {
