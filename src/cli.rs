@@ -30,7 +30,9 @@ pub enum Commands {
     },
     Rebuild {},
     Repl {},
-    Update {},
+    Update {
+        target: Option<String>,
+    },
     Diff {},
     New {
         #[clap(subcommand)]
