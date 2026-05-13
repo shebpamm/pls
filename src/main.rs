@@ -13,7 +13,8 @@ fn main() {
         Commands::New { template } => commands::new::new(ctx, template),
         Commands::Update { target } => commands::update::update(ctx, target),
         _ => unimplemented!(),
-    }.unwrap_or_else(|e| {
+    }
+    .unwrap_or_else(|e| {
         eprintln!("Error: {e}");
         std::process::exit(1);
     });

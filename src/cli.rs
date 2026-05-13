@@ -86,7 +86,6 @@ impl Templates {
     }
 }
 
-
 pub fn parse_args() -> Arguments {
     Arguments::parse()
 }

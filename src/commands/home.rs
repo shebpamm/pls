@@ -25,7 +25,10 @@ pub fn home(ctx: crate::context::Context, machine: Option<String>) -> Result<()>
         println!("Using machine name: {}", machine);
     }
 
-    let target = format!("{}#homeConfigurations.{}.activationPackage", ctx.dotfiles, machine);
+    let target = format!(
+        "{}#homeConfigurations.{}.activationPackage",
+        ctx.dotfiles, machine
+    );
 
     if ctx.verbose {
         println!("Flake target: {}", target);
