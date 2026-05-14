@@ -1,4 +1,5 @@
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ValueHint};
+use clap_complete::Shell;
 use std::path::PathBuf;
 
 #[derive(Debug, Parser)]
@@ -37,6 +38,10 @@ pub enum Commands {
     New {
         #[clap(subcommand)]
         template: Templates,
+    },
+    Completions {
+        #[clap(value_enum)]
+        generator: Shell,
     },
 }
 
