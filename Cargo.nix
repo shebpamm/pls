@@ -25,7 +25,7 @@ args@{
   cargoConfig ? {},
 }:
 let
-  nixifiedLockHash = "0d6b3a6bc02432ae892ad57b598d1990a950abc8bcd28d3b725a8aa1bc41c346";
+  nixifiedLockHash = "49f0acf0b322042758f35ed19ad63a1a09673b610239cd52c49715b7506e2ab8";
   workspaceSrc = if args.workspaceSrc == null then ./. else args.workspaceSrc;
   currentLockHash = builtins.hashFile "sha256" (workspaceSrc + /Cargo.lock);
   lockHashIgnored = if ignoreLockHash
@@ -300,6 +300,19 @@ in
     };
   });
   
+  "registry+https://github.com/rust-lang/crates.io-index".clap_complete."4.6.5" = overridableMkRustCrate (profileName: rec {
+    name = "clap_complete";
+    version = "4.6.5";
+    registry = "registry+https://github.com/rust-lang/crates.io-index";
+    src = fetchCratesIo { inherit name version; sha256 = "e0a7a9bfdb35811f9e59832f0f05975114d2251b415fb534108e6f34060fd772"; };
+    features = builtins.concatLists [
+      [ "default" ]
+    ];
+    dependencies = {
+      clap = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".clap."4.6.1" { inherit profileName; }).out;
+    };
+  });
+  
   "registry+https://github.com/rust-lang/crates.io-index".clap_derive."4.6.1" = overridableMkRustCrate (profileName: rec {
     name = "clap_derive";
     version = "4.6.1";
@@ -558,6 +571,7 @@ in
     dependencies = {
       askama = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".askama."0.15.6" { inherit profileName; }).out;
       clap = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".clap."4.6.1" { inherit profileName; }).out;
+      clap_complete = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".clap_complete."4.6.5" { inherit profileName; }).out;
       color_eyre = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".color-eyre."0.6.5" { inherit profileName; }).out;
       eyre = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".eyre."0.6.12" { inherit profileName; }).out;
       hostname = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".hostname."0.4.2" { inherit profileName; }).out;
