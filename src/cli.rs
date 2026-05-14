@@ -1,4 +1,4 @@
-use clap::{Parser, Subcommand, ValueHint};
+use clap::{Args, Parser, Subcommand, ValueHint};
 use clap_complete::Shell;
 use std::path::PathBuf;
 
@@ -12,7 +12,7 @@ pub struct Arguments {
     pub subcommand: Commands,
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Args)]
 pub struct GlobalOptions {
     #[clap(short, long, help = "Enable verbose output")]
     pub verbose: bool,
@@ -45,7 +45,7 @@ pub enum Commands {
     },
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Args)]
 pub struct TemplateArgs {
     #[clap(help = "Path to module")]
     pub path: PathBuf,
