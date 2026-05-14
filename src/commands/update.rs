@@ -6,7 +6,6 @@ use std::process::Command;
 
 #[derive(Debug, Deserialize)]
 struct Input {
-    url: String,
     group: String,
 }
 
@@ -74,7 +73,7 @@ fn fetch_inputs(ctx: &Context) -> Result<Inputs> {
 fn update_target(ctx: Context, target: String) -> Result<()> {
     let inputs = fetch_inputs(&ctx)?;
 
-    if let Some(input) = inputs.inputs.get(&target) {
+    if inputs.inputs.contains_key(&target) {
         return do_update(ctx, Some(vec![target]));
     };
 
