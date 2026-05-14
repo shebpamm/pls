@@ -71,6 +71,7 @@ impl TemplateArgs {
 }
 
 #[derive(Debug, Subcommand)]
+#[command(disable_help_subcommand = true)]
 pub enum Templates {
     Aspect {
         #[clap(flatten)]
