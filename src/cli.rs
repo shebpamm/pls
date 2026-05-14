@@ -71,7 +71,7 @@ pub enum Templates {
         #[clap(flatten)]
         args: TemplateArgs,
     },
-    Lib {
+    Wrapper {
         #[clap(flatten)]
         args: TemplateArgs,
     },
@@ -81,7 +81,7 @@ impl Templates {
     pub fn args(&self) -> &TemplateArgs {
         match self {
             Templates::Aspect { args } => args,
-            Templates::Lib { args } => args,
+            Templates::Wrapper { args } => args,
         }
     }
 }
