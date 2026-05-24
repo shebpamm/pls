@@ -2,12 +2,13 @@
 {
   flake.aspects = { ... }: {
     {{ name }} = {
-      nixos = { pkgs, ... }: {
+      {%- for class in classes %}
+      {{ class }} = 
+        { pkgs, ... }: 
+        {
 
-      };
-      homeManager = { pkgs, ... }: {
-
-      };
+        };
+      {%- endfor %}
     };
   };
 }

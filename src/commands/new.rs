@@ -7,6 +7,7 @@ use askama::Template;
 #[template(path = "aspect.nix", escape = "none")]
 struct AspectTemplate {
     name: String,
+    classes: Vec<String>,
 }
 
 #[derive(Template)]
@@ -33,7 +34,15 @@ impl From<&Templates> for RenderableTemplate {
     fn from(template: &Templates) -> Self {
         let name = template.args().resolved_name();
         match template {
-            Templates::Aspect { args: _ } => RenderableTemplate::Aspect(AspectTemplate { name }),
+            Templates::Aspect { args } => {
+                let classes = &args
+                    .only
+                    .clone()
+                    .unwrap_or(vec!["nixos".to_string(), "homeManager".to_string()]);
+                let classes = classes.clone();
+
+                RenderableTemplate::Aspect(AspectTemplate { name, classes })
+            }
             Templates::Wrapper { args: _ } => RenderableTemplate::Wrapper(WrapperTemplate { name }),
         }
     }

@@ -1,4 +1,4 @@
-use clap::{Args, Parser, Subcommand, ValueHint};
+use clap::{Args, Parser, Subcommand};
 use clap_complete::Shell;
 use std::path::PathBuf;
 
@@ -51,6 +51,9 @@ pub struct TemplateArgs {
     pub path: PathBuf,
     #[clap(short, long, help = "Name of the module")]
     pub name: Option<String>,
+
+    #[arg(long)]
+    pub only: Option<Vec<String>>,
 }
 
 impl TemplateArgs {
