@@ -1,6 +1,7 @@
 use clap::{Args, Parser, Subcommand};
 use clap_complete::Shell;
 use std::path::PathBuf;
+use strum::Display;
 
 #[derive(Debug, Parser)]
 #[clap(name = "pls", version)]
@@ -20,7 +21,8 @@ pub struct GlobalOptions {
     pub only_print: bool,
 }
 
-#[derive(Debug, Clone, Default, clap::ValueEnum)]
+#[derive(Debug, Clone, Default, Display, clap::ValueEnum)]
+#[strum(serialize_all = "lowercase")]
 pub enum RebuildAction {
     #[default]
     Switch,
@@ -44,6 +46,9 @@ pub enum Commands {
         #[clap(short, long, value_enum, help = "Action to perform")]
         #[arg(default_value_t)]
         action: RebuildAction,
+
+        #[clap(short, long, help = "Remote target")]
+        target: Option<String>,
     },
     Repl {},
     Update {

@@ -1,15 +1,6 @@
+use crate::utils::default_machine_name;
 use color_eyre::eyre::Result;
 use std::process::Command;
-
-fn default_machine_name() -> Result<String> {
-    hostname::get()
-        .map_err(|e| eyre::eyre!("Failed to get hostname: {}", e))
-        .and_then(|os_str| {
-            os_str
-                .into_string()
-                .map_err(|_| eyre::eyre!("Hostname somehow contains invalid UTF-8"))
-        })
-}
 
 pub fn home(ctx: crate::context::Context, machine: Option<String>) -> Result<()> {
     if ctx.verbose {
