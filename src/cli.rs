@@ -20,6 +20,15 @@ pub struct GlobalOptions {
     pub only_print: bool,
 }
 
+#[derive(Debug, Clone, Default, clap::ValueEnum)]
+pub enum RebuildAction {
+    #[default]
+    Switch,
+    Boot,
+    Test,
+    Build,
+}
+
 #[derive(Debug, Subcommand)]
 pub enum Commands {
     Check {
@@ -29,7 +38,13 @@ pub enum Commands {
     Home {
         machine: Option<String>,
     },
-    Rebuild {},
+    Rebuild {
+        machine: Option<String>,
+
+        #[clap(short, long, value_enum, help = "Action to perform")]
+        #[arg(default_value_t)]
+        action: RebuildAction,
+    },
     Repl {},
     Update {
         target: Option<String>,

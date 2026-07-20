@@ -14,6 +14,7 @@ fn main() {
         Commands::New { template } => commands::new::new(ctx, template),
         Commands::Update { target } => commands::update::update(ctx, target),
         Commands::Completions { generator } => commands::completions::completions(ctx, generator),
+        Commands::Rebuild { machine, action } => commands::rebuild::rebuild(ctx, machine, action),
         _ => unimplemented!(),
     }
     .unwrap_or_else(|e| {
